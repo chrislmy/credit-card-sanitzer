@@ -45,7 +45,7 @@ public class CardNumberSanitizer {
    */
   public String sanitize(String input) {
     List<CardNumberMatch> validCardNumberMatches = getValidCardNumberMatches(input);
-    return performSanitization(new StringBuilder(input), validCardNumberMatches);
+    return performSanitization(input, validCardNumberMatches);
   }
 
   /**
@@ -57,7 +57,7 @@ public class CardNumberSanitizer {
    */
   public SanitizationResult deepSanitize(String input) {
     List<CardNumberMatch> fullCardNumberMatches = findMatches(input);
-    String sanitizedString = performSanitization(new StringBuilder(input), fullCardNumberMatches);
+    String sanitizedString = performSanitization(input, fullCardNumberMatches);
 
     return new SanitizationResult(fullCardNumberMatches, sanitizedString);
   }
@@ -79,14 +79,14 @@ public class CardNumberSanitizer {
     matches.forEach((match) -> match.setMaskedPayload(maskString(match.originalPayload())));
   }
 
-  private String performSanitization(StringBuilder outputStringBuilder,
-      List<CardNumberMatch> cardNumberMatches) {
+  private String performSanitization(String input, List<CardNumberMatch> cardNumberMatches) {
+
     for (CardNumberMatch match : cardNumberMatches) {
       String cardNumber = match.originalPayload();
-      outputStringBuilder.replace(match.startIndex(), match.endIndex(), maskString(cardNumber));
+      input = input.replace(cardNumber, maskString(cardNumber));
     }
 
-    return outputStringBuilder.toString();
+    return input;
   }
 
   private String maskString(String cardNumberMatch) {

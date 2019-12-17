@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.github.chrislmy.cardsanitizer.validators.CardNumberValidator;
+import com.github.chrislmy.cardsanitizer.validators.LuhnValidator;
 
 public class CardNumberProcessor {
 
@@ -52,7 +52,7 @@ public class CardNumberProcessor {
    * @return Cleaned card number string
    */
   String removeSeparators(String cardNumber) {
-    return cardNumber.replaceAll(invalidSeparatorRegex + '+', "");
+    return cardNumber.replaceAll(invalidSeparatorRegex, "");
   }
 
   private List<CardNumberMatch> filterValidCreditCardNumbers(List<CardNumberMatch> cardNumbers) {
@@ -64,7 +64,7 @@ public class CardNumberProcessor {
 
   private boolean checkValidCreditCardNumber(CardNumberMatch cardNumber) {
     String cleanedCardNumber = removeSeparators(cardNumber.originalPayload());
-    return CardNumberValidator.LUHN_VALIDATOR.isValid(cleanedCardNumber);
+    return LuhnValidator.getInstance().isValid(cleanedCardNumber);
   }
 
   private Pattern generateCardNumberPattern(int cardNumberLength) {

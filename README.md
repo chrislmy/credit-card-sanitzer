@@ -8,7 +8,7 @@
 * [Usage](#usage)
   * [Basic Usage](#basic-usage)
   * [Custom config for sanitization](#custom-config-for-sanitization)
-  * [Other Usage](#other-functions)
+  * [Other Functions](#other-functions)
   * [Error Handling](#error-handling)
 * [Contributing or raising issues](#contributing-or-raising-issues)
 
