@@ -15,14 +15,14 @@ public class CardNumberSanitizer {
   private CardNumberProcessor cardNumberProcessor;
 
   public CardNumberSanitizer() {
-    SanitizerConfig sanitizerConfig = SanitizerConfig.builder().build();
-    this.sanitizerConfig = sanitizerConfig;
-    this.cardNumberProcessor = new CardNumberProcessor();
+    SanitizerConfig defaultConfig = SanitizerConfig.builder().build();
+    this.sanitizerConfig = defaultConfig;
+    this.cardNumberProcessor = new CardNumberProcessor(defaultConfig);
   }
 
   public CardNumberSanitizer(SanitizerConfig sanitizerConfig) {
     this.sanitizerConfig = sanitizerConfig;
-    this.cardNumberProcessor = new CardNumberProcessor(sanitizerConfig.invalidSeparators());
+    this.cardNumberProcessor = new CardNumberProcessor(sanitizerConfig);
   }
 
   /**
@@ -109,8 +109,8 @@ public class CardNumberSanitizer {
     } catch (PatternSyntaxException e) {
       String invalidSeparatorStr = Arrays.toString(sanitizerConfig.invalidSeparators());
       StringBuilder builder = new StringBuilder(invalidSeparatorStr);
-      builder.setCharAt(0,'(');
-      builder.setCharAt(invalidSeparatorStr.length() - 1,')');
+      builder.setCharAt(0, '(');
+      builder.setCharAt(invalidSeparatorStr.length() - 1, ')');
       String message = String.format("Invalid separators provided: %s", builder.toString());
       throw new InvalidSeparatorsException(message);
     }

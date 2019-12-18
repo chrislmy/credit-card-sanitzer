@@ -1,6 +1,7 @@
 package com.github.chrislmy.cardsanitizer.core;
 
 import com.github.chrislmy.cardsanitizer.domain.CardNumberMatch;
+import com.github.chrislmy.cardsanitizer.domain.SanitizerConfig;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,15 +14,14 @@ import com.github.chrislmy.cardsanitizer.validators.LuhnValidator;
 
 public class CardNumberProcessor {
 
-  private String invalidSeparatorRegex = "[ -]";
-  private static final int cardNumberUpperBound = 19;
-  private static final int cardNumberLowerBound = 13;
+  private String invalidSeparatorRegex;
+  private int cardNumberUpperBound;
+  private int cardNumberLowerBound;
 
-  CardNumberProcessor() {
-  }
-
-  CardNumberProcessor(char[] invalidSeparators) {
-    this.invalidSeparatorRegex = generateInvalidSeparatorRegex(invalidSeparators);
+  CardNumberProcessor(SanitizerConfig config) {
+    this.invalidSeparatorRegex = generateInvalidSeparatorRegex(config.invalidSeparators());
+    this.cardNumberUpperBound = config.cardNumberUpperBound();
+    this.cardNumberLowerBound = config.cardNumberLowerBound();
   }
 
   /**
