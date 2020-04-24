@@ -17,11 +17,11 @@ const TryItYourself = () => {
 
   return (
     <Container>
-      <Typography className={classes.title} variant="h3">Try it your self</Typography>
+      <Typography className={classes.title} variant="h3">Try it yourself</Typography>
       <Divider />
       <TryItYourselfForm />
-      <SanitizerCodeBlock />
       <SanitizationResult />
+      <SanitizerCodeBlock />
     </Container>
   );
 };

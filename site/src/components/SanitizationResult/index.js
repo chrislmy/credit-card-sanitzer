@@ -4,8 +4,13 @@ import { Typography, makeStyles } from '@material-ui/core';
 import Divider from '../../components/Divider';
 import CodeBlock from '../../components/CodeBlock';
 import PropTypes from 'prop-types';
+import LoadingSpinner from '../LoadingSpinner';
+import { TRY_IT_YOURSELF } from '../../state/request/requestNames';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    position: 'relative'
+  },
   panel: {
     marginTop: theme.spacing(1.5),
     border: '1px #b2aeae solid',
@@ -21,7 +26,7 @@ const SanitizationResult = ({ sanitizationResult, cardNumberMatches }) => {
   cardNumberMatches.forEach((match, index) => { 
     const padding = '  ';
     const string = index > 0 ? (padding + match.maskedPayload) : match.maskedPayload;
-    cardNumberMatchesString += `${string}\n\n`; 
+    cardNumberMatchesString += `${string}\n`; 
   });
 
   const codeSnippet = `
@@ -32,10 +37,13 @@ const SanitizationResult = ({ sanitizationResult, cardNumberMatches }) => {
   `;
 
   return (
-    <div className={classes.panel}>
-      <Typography variant="h4">Result</Typography>
-      <Divider />
-      <CodeBlock codeSnippet={codeSnippet} language="java" />
+    <div className={classes.root}>
+      <LoadingSpinner loadingRequestName={TRY_IT_YOURSELF} />
+      <div className={classes.panel}>
+        <Typography variant="h4">Result</Typography>
+        <Divider />
+        <CodeBlock codeSnippet={codeSnippet} language="java" />
+      </div>
     </div>
   );
 };

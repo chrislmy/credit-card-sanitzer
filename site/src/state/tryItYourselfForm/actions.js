@@ -19,7 +19,7 @@ const submitSanitizerValues = () => async(dispatch, getState) => {
 
   try {
     dispatch(dataLoading(TRY_IT_YOURSELF));
-    const response = await axios.post(path, values);
+    const response = await axios.post(path, values, { timeout: config.api.timeout });
     const { data } = response;
     dispatch({ type: types.SUCCESS, data });
     dispatch(dataLoadingSuccess(TRY_IT_YOURSELF));
